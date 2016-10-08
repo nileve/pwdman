@@ -30,13 +30,12 @@ import javafx.scene.text.Text;
 
 public class Controller {
 
-	@FXML
-	private Text buttonpressed;
+	@FXML private Text buttonPressed;
 
 	@FXML
 	protected void handleEnterButtonAction (ActionEvent event) {
 
-		buttonpressed.setText("Enter button pressed");
+		buttonPressed.setText("Enter button pressed");
 	}
 
 }

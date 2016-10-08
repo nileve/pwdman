@@ -29,7 +29,7 @@
                 onAction="#handleEnterButtonAction"/>
     </HBox>
 
-    <Text fx:id="buttonpressed"
+    <Text fx:id="buttonPressed"
           GridPane.columnIndex="1" GridPane.rowIndex="6"/>
 
 </GridPane>
