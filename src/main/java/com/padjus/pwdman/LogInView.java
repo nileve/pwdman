@@ -25,17 +25,17 @@ package com.padjus.pwdman;
  */
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -50,7 +50,7 @@ public class LogInView extends Application {
     // start() method is the main entry point for all JavaFX applications
     public void start (Stage stage) throws Exception {
 
-        stage.setTitle("LOGIN pwdman - Password Manager v1.0");
+        stage.setTitle("pwdman - Password Manager v1.0 -> LOGIN VIEW");
 
         // creates a GridPane object and assigns it to the variable named grid
         GridPane grid = new GridPane();
@@ -113,7 +113,7 @@ public class LogInView extends Application {
         final Text actiontarget2 = new Text();
         grid.add(actiontarget2, 1, 8);
 
-        openBtn.setOnAction(new EventHandler<ActionEvent>() {
+        /*openBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle (ActionEvent e) {
@@ -121,7 +121,77 @@ public class LogInView extends Application {
                 actiontarget2.setText("Right button pressed");
                 actiontarget2.setId("actiontarget");
             }
+        });*/
+
+        openBtn.setOnAction((ActionEvent t) -> {
+
+            final Stage mainStage = new Stage();
+
+            mainStage.setTitle("pwdman - Password Manager v1.0 -> MAIN VIEW");
+
+            // create BorderPane in new window
+            BorderPane border = new BorderPane();
+
+            // create menubar
+            MenuBar menuBar = new MenuBar();
+            menuBar.prefWidthProperty().bind(mainStage.widthProperty());
+            border.setTop(menuBar);
+            // File menu
+            Menu fileMenu = new Menu("File");
+            MenuItem newMenuItem = new MenuItem("New db");
+            MenuItem impMenuItem = new MenuItem("Import db");
+            MenuItem expMenuItem = new MenuItem("Export db");
+            MenuItem exitMenuItem = new MenuItem("Exit");
+            // exit program, if exit menuitem is pressed
+            exitMenuItem.setOnAction(actionEvent -> Platform.exit());
+            fileMenu.getItems().addAll(newMenuItem, impMenuItem, expMenuItem,
+                                       exitMenuItem);
+            // Edit menu
+            Menu editMenu = new Menu("Edit");
+            MenuItem edit1MenuItem = new MenuItem("Edit1");
+            MenuItem edit2MenuItem = new MenuItem("Edit2");
+            MenuItem edit3MenuItem = new MenuItem("Edit3");
+            editMenu.getItems().addAll(edit1MenuItem, edit2MenuItem, edit3MenuItem);
+            // Help menu
+            Menu helpMenu = new Menu("HELP");
+            MenuItem helpMenuItem = new MenuItem("Help");
+            MenuItem aboutMenuItem = new MenuItem("About");
+            helpMenu.getItems().addAll(helpMenuItem, aboutMenuItem);
+
+            menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
+
+            /*ToolBar toolbar = new ToolBar();
+            HBox statusbar = new HBox();
+            //Node appContent = new appContent();
+            border.setTop(toolbar);
+            //border.setCenter(appContent);
+            border.setBottom(statusbar);*/
+
+            //create scene with set width, height
+            Scene scene = new Scene(border, 800, 600);
+
+            //set scene to stage
+            mainStage.setScene(scene);
+
+            scene.getStylesheets()
+                 .add(getClass().getResource("/pwdman.css").toExternalForm());
+            //center stage on screen
+            //mainStage.centerOnScreen();
+            // show the stage
+            mainStage.show();
+
+            //add some node to scene
+            Text text = new Text(20, 110, "JavaFX");
+            //text.setFill(Color.DODGERBLUE);
+            //text.setEffect(new Lighting());
+            text.setFont(Font.font(Font.getDefault().getFamily(), 50));
+
+            // add text to the border
+            border.getChildren().add(text);
+
         });
+
+        //return openBtn;
 
         Scene scene = new Scene(grid, 600, 400);
         stage.setScene(scene);
