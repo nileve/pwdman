@@ -25,6 +25,8 @@ package com.padjus.pwdman;
  */
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,6 +36,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LogInView extends Application {
@@ -80,6 +83,26 @@ public class LogInView extends Application {
         hbBtn1.getChildren().add(createBtn);
         grid.add(hbBtn1, 0, 6);
 
+        // add txt control for displaying the message when the button is
+        // being pressed
+        final Text actiontarget = new Text();
+        grid.add(actiontarget, 1, 7);
+
+        // setOnAction() method is used to register an event handler that
+        // sets the actiontarget object to "Create new db button pressed")
+        // when the button is being pressed
+        createBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle (ActionEvent e) {
+
+                actiontarget.setText("Left button pressed");
+                // Create an ID for each text node by using the setID()
+                // method of the Node class
+                actiontarget.setId("actiontarget");
+            }
+        });
+
         // create button for the existing db connection
         Button openBtn = new Button("Open existing db");
         HBox hbBtn2 = new HBox(10);
@@ -89,8 +112,11 @@ public class LogInView extends Application {
 
         Scene scene = new Scene(grid, 600, 400);
         stage.setScene(scene);
+        // load css file
+        scene.getStylesheets()
+             .add(getClass().getResource("/pwdman.css").toExternalForm());
+        //scene.getStylesheets().add("pwdman.css");
         stage.show();
     }
 }
-
 
