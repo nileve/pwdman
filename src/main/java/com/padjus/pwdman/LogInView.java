@@ -151,7 +151,8 @@ public class LogInView extends Application {
             MenuItem edit1MenuItem = new MenuItem("Edit1");
             MenuItem edit2MenuItem = new MenuItem("Edit2");
             MenuItem edit3MenuItem = new MenuItem("Edit3");
-            editMenu.getItems().addAll(edit1MenuItem, edit2MenuItem, edit3MenuItem);
+            editMenu.getItems()
+                    .addAll(edit1MenuItem, edit2MenuItem, edit3MenuItem);
             // Help menu
             Menu helpMenu = new Menu("HELP");
             MenuItem helpMenuItem = new MenuItem("Help");
@@ -202,4 +203,3 @@ public class LogInView extends Application {
         stage.show();
     }
 }
-
