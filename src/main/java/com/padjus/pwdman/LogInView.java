@@ -87,9 +87,8 @@ public class LogInView extends Application {
         // being pressed
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 7);
-
         // setOnAction() method is used to register an event handler that
-        // sets the actiontarget object to "Create new db button pressed")
+        // sets the actiontarget object to "Left button pressed"
         // when the button is being pressed
         createBtn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -123,10 +122,9 @@ public class LogInView extends Application {
             }
         });*/
 
-        openBtn.setOnAction((ActionEvent t) -> {
+        openBtn.setOnAction((ActionEvent e) -> {
 
             final Stage mainStage = new Stage();
-
             mainStage.setTitle("pwdman - Password Manager v1.0 -> MAIN VIEW");
 
             // create BorderPane in new window
@@ -201,5 +199,7 @@ public class LogInView extends Application {
              .add(getClass().getResource("/pwdman.css").toExternalForm());
         //scene.getStylesheets().add("pwdman.css");
         stage.show();
+
     }
+
 }
