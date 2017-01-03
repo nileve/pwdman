@@ -50,7 +50,7 @@ public class LogInView extends Application {
     // start() method is the main entry point for all JavaFX applications
     public void start (Stage stage) throws Exception {
 
-        stage.setTitle("pwdman - Password Manager v1.0");
+        stage.setTitle("LOGIN pwdman - Password Manager v1.0");
 
         // creates a GridPane object and assigns it to the variable named grid
         GridPane grid = new GridPane();
@@ -109,6 +109,19 @@ public class LogInView extends Application {
         hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn2.getChildren().add(openBtn);
         grid.add(hbBtn2, 2, 6);
+
+        final Text actiontarget2 = new Text();
+        grid.add(actiontarget2, 1, 8);
+
+        openBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle (ActionEvent e) {
+
+                actiontarget2.setText("Right button pressed");
+                actiontarget2.setId("actiontarget");
+            }
+        });
 
         Scene scene = new Scene(grid, 600, 400);
         stage.setScene(scene);
