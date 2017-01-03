@@ -48,9 +48,9 @@ public class LogInView extends Application {
 
     @Override
     // start() method is the main entry point for all JavaFX applications
-    public void start (Stage stage) throws Exception {
+    public void start (Stage loginStage) throws Exception {
 
-        stage.setTitle("pwdman - Password Manager v1.0 -> LOGIN VIEW");
+        loginStage.setTitle("pwdman - Password Manager v1.0 -> LOGIN VIEW");
 
         // creates a GridPane object and assigns it to the variable named grid
         GridPane grid = new GridPane();
@@ -193,12 +193,12 @@ public class LogInView extends Application {
         //return openBtn;
 
         Scene scene = new Scene(grid, 600, 400);
-        stage.setScene(scene);
+        loginStage.setScene(scene);
         // load css file
         scene.getStylesheets()
              .add(getClass().getResource("/pwdman.css").toExternalForm());
         //scene.getStylesheets().add("pwdman.css");
-        stage.show();
+        loginStage.show();
 
     }
 
