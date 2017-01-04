@@ -35,7 +35,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -63,13 +63,10 @@ public class LogInView extends Application {
         Label userName = new Label("Insert Your db name:");
         // add created object to the grid
         grid.add(userName, 1, 1);
-
         TextField dbUserName = new TextField();
         grid.add(dbUserName, 1, 2);
-
         Label dbPwd = new Label("Insert password for Your db:");
         grid.add(dbPwd, 1, 3);
-
         PasswordField pwdField = new PasswordField();
         grid.add(pwdField, 1, 4);
 
@@ -112,92 +109,92 @@ public class LogInView extends Application {
         final Text actiontarget2 = new Text();
         grid.add(actiontarget2, 1, 8);
 
-        /*openBtn.setOnAction(new EventHandler<ActionEvent>() {
+        openBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle (ActionEvent e) {
 
-                actiontarget2.setText("Right button pressed");
-                actiontarget2.setId("actiontarget");
+                Stage mainStage = new Stage();
+                mainStage.setTitle(
+                        "pwdman - Password Manager v1.0 -> MAIN VIEW");
+
+                // create BorderPane in new window
+                BorderPane border = new BorderPane();
+
+                // create menubar
+                MenuBar menuBar = new MenuBar();
+                menuBar.prefWidthProperty().bind(mainStage.widthProperty());
+                border.setTop(menuBar);
+                // File menu
+                Menu fileMenu = new Menu("File");
+                MenuItem newMenuItem = new MenuItem("New db");
+                MenuItem openMenuItem = new MenuItem("Open ...");
+                MenuItem impMenuItem = new MenuItem("Import db");
+                MenuItem expMenuItem = new MenuItem("Export db");
+                MenuItem exitMenuItem = new MenuItem("Exit");
+                // exit program, if exit menuitem is pressed
+                exitMenuItem.setOnAction(actionEvent -> Platform.exit());
+                fileMenu.getItems()
+                        .addAll(newMenuItem, openMenuItem, impMenuItem,
+                                expMenuItem, exitMenuItem);
+                // Edit menu
+                Menu editMenu = new Menu("Edit");
+                MenuItem edit1MenuItem = new MenuItem("Edit1");
+                MenuItem edit2MenuItem = new MenuItem("Edit2");
+                MenuItem edit3MenuItem = new MenuItem("Edit3");
+                editMenu.getItems()
+                        .addAll(edit1MenuItem, edit2MenuItem, edit3MenuItem);
+                // Help menu
+                Menu helpMenu = new Menu("HELP");
+                MenuItem helpMenuItem = new MenuItem("Help");
+                MenuItem aboutMenuItem = new MenuItem("About");
+                helpMenu.getItems().addAll(helpMenuItem, aboutMenuItem);
+
+                menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
+
+                // Left region
+                TreeItem<String> rootItem = new TreeItem<String> ("DB name");
+                rootItem.setExpanded(true);
+                for (int i = 1; i < 6; i++) {
+                    TreeItem<String> item = new TreeItem<String> ("Message" + i);
+                    rootItem.getChildren().add(item);
+                }
+                TreeView<String> tree = new TreeView<String> (rootItem);
+                StackPane root = new StackPane();
+                // add tree items to the tree
+                root.getChildren().add(tree);
+
+                border.setLeft(tree);
+
+                // Center region
+                Text text1 = new Text("PWDMAN PWDMAN PWDMAN PWDMAN");
+                text1.setId("test-txt");
+
+                border.setCenter(text1);
+
+                // Bottom region
+                Text text = new Text("PWDMAN PWDMAN PWDMAN PWDMAN");
+                text.setId("test-txt");
+
+                border.setBottom(text);
+
+                //create scene with set width, height
+                Scene scene = new Scene(border, 800, 600);
+                //set scene to stage
+                mainStage.setScene(scene);
+                scene.getStylesheets().add(getClass().getResource("/pwdman.css")
+                                                     .toExternalForm());
+                // show the mainStage, close loginStage
+                mainStage.show();
+                loginStage.close();
             }
-        });*/
-
-        openBtn.setOnAction((ActionEvent e) -> {
-
-            final Stage mainStage = new Stage();
-            mainStage.setTitle("pwdman - Password Manager v1.0 -> MAIN VIEW");
-
-            // create BorderPane in new window
-            BorderPane border = new BorderPane();
-
-            // create menubar
-            MenuBar menuBar = new MenuBar();
-            menuBar.prefWidthProperty().bind(mainStage.widthProperty());
-            border.setTop(menuBar);
-            // File menu
-            Menu fileMenu = new Menu("File");
-            MenuItem newMenuItem = new MenuItem("New db");
-            MenuItem impMenuItem = new MenuItem("Import db");
-            MenuItem expMenuItem = new MenuItem("Export db");
-            MenuItem exitMenuItem = new MenuItem("Exit");
-            // exit program, if exit menuitem is pressed
-            exitMenuItem.setOnAction(actionEvent -> Platform.exit());
-            fileMenu.getItems().addAll(newMenuItem, impMenuItem, expMenuItem,
-                                       exitMenuItem);
-            // Edit menu
-            Menu editMenu = new Menu("Edit");
-            MenuItem edit1MenuItem = new MenuItem("Edit1");
-            MenuItem edit2MenuItem = new MenuItem("Edit2");
-            MenuItem edit3MenuItem = new MenuItem("Edit3");
-            editMenu.getItems()
-                    .addAll(edit1MenuItem, edit2MenuItem, edit3MenuItem);
-            // Help menu
-            Menu helpMenu = new Menu("HELP");
-            MenuItem helpMenuItem = new MenuItem("Help");
-            MenuItem aboutMenuItem = new MenuItem("About");
-            helpMenu.getItems().addAll(helpMenuItem, aboutMenuItem);
-
-            menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
-
-            /*ToolBar toolbar = new ToolBar();
-            HBox statusbar = new HBox();
-            //Node appContent = new appContent();
-            border.setTop(toolbar);
-            //border.setCenter(appContent);
-            border.setBottom(statusbar);*/
-
-            //create scene with set width, height
-            Scene scene = new Scene(border, 800, 600);
-
-            //set scene to stage
-            mainStage.setScene(scene);
-
-            scene.getStylesheets()
-                 .add(getClass().getResource("/pwdman.css").toExternalForm());
-            //center stage on screen
-            //mainStage.centerOnScreen();
-            // show the stage
-            mainStage.show();
-
-            //add some node to scene
-            Text text = new Text(20, 110, "JavaFX");
-            //text.setFill(Color.DODGERBLUE);
-            //text.setEffect(new Lighting());
-            text.setFont(Font.font(Font.getDefault().getFamily(), 50));
-
-            // add text to the border
-            border.getChildren().add(text);
-
         });
-
-        //return openBtn;
 
         Scene scene = new Scene(grid, 600, 400);
         loginStage.setScene(scene);
         // load css file
         scene.getStylesheets()
              .add(getClass().getResource("/pwdman.css").toExternalForm());
-        //scene.getStylesheets().add("pwdman.css");
         loginStage.show();
 
     }
