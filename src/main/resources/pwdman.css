@@ -1,9 +1,18 @@
+/* =============== STYLE  ================= */
+
+.root {
+    -fx-background-color: #333333;
+    -fx-accent: DODGERBLUE;
+    -fx-font-size: 14px;
+    -fx-font-family: "Calibri";
+}
+
 .label {
     -fx-font-size: 14px;
     -fx-font-family: "Calibri";
     /*-fx-font-weight: ;*/
     -fx-text-fill: #d0d9e0;
-    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 
 #actiontarget {
@@ -18,34 +27,35 @@
     -fx-text-fill: #d0d9e0;
     -fx-font-size: 14px;
     -fx-font-family: "Calibri";
-    -fx-font-weight: bold;
+    /*-fx-font-weight: bold;*/
     -fx-background-color: linear-gradient(#4E4E4E, #474747);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-.root {
-    -fx-background-color: #333333;
-}
+/* =============== STYLE ================= */
 
 .button:hover {
     -fx-background-color: #696969;
 }
 
-.menu:hover, .menu-item:hover {
+/* =============== STYLE MainView MENUBAR ================= */
+
+.menu:hover, .menu-item:hover, .menu-item:focused {
     -fx-background-color: DODGERBLUE;
 }
 
 /*.menu {
     -fx-background-color: DODGERBLUE;
-}
+}*/
 
 .menu-item:hover {
     -fx-background-color: DODGERBLUE;
-}*/
+}
 
 .menu-bar, .menu-item {
     -fx-background-color: #474747;
     -fx-text-fill: #d0d9e0;
+    -fx-font-size: 14px;
 }
 
 /*.menu-item {
@@ -54,9 +64,17 @@
 }*/
 
 .context-menu {
-    /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/
+    /*-fx-skin: ;*/
     -fx-background-color: #474747;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0em; /* 4 1 8 1 */
+}
+
+#test-txt {
+    -fx-font-size: 50px;
+    -fx-fill: DODGERBLUE;
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
