@@ -24,7 +24,6 @@ package com.padjus.pwdman;
  * @version 07/10/16
  */
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,16 +38,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class LogInView extends Application {
+public class LogInView {
 
-    public static void main (String[] args) {
+    Stage loginStage = new Stage();
 
-        launch(args);
+    LogInView () {
+
+        setupScene();
+
+
     }
 
-    @Override
-    // start() method is the main entry point for all JavaFX applications
-    public void start (Stage loginStage) throws Exception {
+    private void setupScene () {
 
         loginStage.setTitle("pwdman - Password Manager v1.0 -> LOGIN VIEW");
 
@@ -153,13 +154,15 @@ public class LogInView extends Application {
                 menuBar.getMenus().addAll(fileMenu, editMenu, helpMenu);
 
                 // Left region
-                TreeItem<String> rootItem = new TreeItem<String> ("DB name");
+                TreeItem<String> rootItem = new TreeItem<String>("DB name");
                 rootItem.setExpanded(true);
-                for (int i = 1; i < 6; i++) {
-                    TreeItem<String> item = new TreeItem<String> ("Message" + i);
+                for (int i = 1;
+                     i < 6;
+                     i++) {
+                    TreeItem<String> item = new TreeItem<String>("Message" + i);
                     rootItem.getChildren().add(item);
                 }
-                TreeView<String> tree = new TreeView<String> (rootItem);
+                TreeView<String> tree = new TreeView<String>(rootItem);
                 StackPane root = new StackPane();
                 // add tree items to the tree
                 root.getChildren().add(tree);
