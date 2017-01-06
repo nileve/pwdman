@@ -21,11 +21,14 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
+ * Application starting point.
+ *
  * pwdman
  *
  * @author Evelin Padjus
  * @version 1.0
  */
+
 public class Main extends Application {
 
     @Override
