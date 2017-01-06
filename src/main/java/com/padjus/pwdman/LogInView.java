@@ -82,7 +82,6 @@ public class LogInView {
         final Text createBtnAction = new Text();
         
         createBtn.setOnAction(event -> {
-            
             createBtnAction.setText("Left button pressed");
             createBtnAction.setId("createBtnAction");
         });
@@ -96,10 +95,8 @@ public class LogInView {
         final Text openBtnAction = new Text();
         
         openBtn.setOnAction(event -> {
-            
             new MainView();
             loginStage.close();
-            
         });
         
         grid.add(userName, 1, 1);
