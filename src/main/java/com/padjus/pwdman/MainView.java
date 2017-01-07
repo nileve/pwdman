@@ -79,9 +79,7 @@ public class MainView {
         MenuItem exitMenuItem = new MenuItem("Exit");
         
         openMenuItem.setOnAction(event -> {
-    
             Desktop desktop = Desktop.getDesktop();
-            
             File dbFile = openFileExplorer.showOpenDialog(mainStage);
             if (dbFile != null) {
                 try {
@@ -93,7 +91,6 @@ public class MainView {
                     );
                 }
             }
-            
         });
         
         exitMenuItem.setOnAction(event -> Platform.exit());
@@ -113,14 +110,12 @@ public class MainView {
         MenuItem aboutMenuItem = new MenuItem("About");
         
         aboutMenuItem.setOnAction(event -> {
-            
             Desktop www = Desktop.getDesktop();
             try {
                 www.browse(new URI("https://github.com/nileve/pwdman"));
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
-            
         });
         
         helpMenu.getItems().addAll(helpMenuItem, aboutMenuItem);
@@ -169,15 +164,13 @@ public class MainView {
         
         border.setBottom(text);
         
-        //create scene with set width, height
         Scene scene = new Scene(border, 1000, 600);
         //set scene to stage
         mainStage.setScene(scene);
         scene.getStylesheets()
              .add(getClass().getResource("/pwdman.css").toExternalForm());
-        // show the mainStage, close loginStage
         mainStage.show();
-        // loginStage.close();
+        
     }
     
 }
