@@ -102,8 +102,8 @@
 
 .table-cell, .column-header{
     -fx-alignment: CENTER-LEFT;
-    -fx-border-color: #d0d9e0;
-    -fx-table-cell-border-color: #d0d9e0;
+    -fx-border-color: #616161;
+    -fx-table-cell-border-color: #616161;
 }
 
 .table-view, .column-header {
