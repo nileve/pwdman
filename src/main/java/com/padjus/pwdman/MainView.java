@@ -19,15 +19,18 @@ package com.padjus.pwdman;
 
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.*;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -37,8 +40,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This is second window for the application (the main view), that is
- * opened from the first window button.
+ * This is the second window for the application (the main view), that is
+ * opened from the first window button. This class builds the user interface
+ * and handles user actions.
  *
  * pwdman
  *
@@ -46,9 +50,9 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 
-public class MainView {
+class MainView {
     
-    Stage mainStage = new Stage();
+    private Stage mainStage = new Stage();
     
     MainView () {
         
@@ -85,10 +89,8 @@ public class MainView {
                 try {
                     desktop.open(dbFile);
                 } catch (IOException ex) {
-                    Logger.getLogger(
-                            MainView.class.getName()).log(
-                            Level.SEVERE, null, ex
-                    );
+                    Logger.getLogger(MainView.class.getName())
+                          .log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -127,7 +129,7 @@ public class MainView {
         rootDb.setExpanded(true);
         for (int i = 1; i < 6; i++) {
             TreeItem<String> rootGroup = new TreeItem<>(
-                    "Grouped " + "Account" + i);
+                    "Grouped Account" + i);
             rootDb.getChildren().add(rootGroup);
             rootGroup.setExpanded(true);
             for (int j = 1; j < 6; j++) {
@@ -137,6 +139,15 @@ public class MainView {
         }
         
         TreeView tree = new TreeView(rootDb);
+        tree.setEditable(true);
+        tree.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            @Override
+            public TreeCell<String> call (TreeView<String> p) {
+            
+                return new TextFieldTreeCellImpl();
+            }
+        });
+        
         StackPane root = new StackPane();
         root.getChildren().add(tree);
         
@@ -144,6 +155,7 @@ public class MainView {
         
         // Center region
         TableView groupAccounts = new TableView();
+        groupAccounts.setId("groupAccounts");
         groupAccounts.setEditable(true);
         
         TableColumn accountNameCol = new TableColumn("Account name");
@@ -151,6 +163,27 @@ public class MainView {
         TableColumn pwdCol = new TableColumn("Password");
         TableColumn urlCol = new TableColumn("URL");
         TableColumn notesCol = new TableColumn("Notes");
+    
+        /*accountNameCol.prefWidthProperty().bind(groupAccounts.widthProperty()
+                                                             .divide(6));
+        userNameCol.prefWidthProperty().bind(groupAccounts.widthProperty()
+                                                          .divide(6));
+        pwdCol.prefWidthProperty().bind(groupAccounts.widthProperty().divide
+                (6));
+        urlCol.prefWidthProperty().bind(groupAccounts.widthProperty()
+                                                             .divide(6));
+        urlCol.prefWidthProperty().bind(groupAccounts.widthProperty()
+                                                          .divide(6));
+        notesCol.prefWidthProperty().bind(groupAccounts.widthProperty().divide
+                (2));*/
+        
+        double width = accountNameCol.widthProperty().get();
+        width += userNameCol.widthProperty().get();
+        width += pwdCol.widthProperty().get();
+        width += urlCol.widthProperty().get();
+        
+        notesCol.prefWidthProperty()
+                .bind(groupAccounts.widthProperty().subtract(width));
         
         groupAccounts.getColumns()
                      .addAll(accountNameCol, userNameCol, pwdCol, urlCol,
@@ -170,6 +203,89 @@ public class MainView {
         scene.getStylesheets()
              .add(getClass().getResource("/pwdman.css").toExternalForm());
         mainStage.show();
+        
+    }
+    
+    // http://docs.oracle.com/javafx/2/ui_controls/tree-view.htm
+    private final class TextFieldTreeCellImpl extends TreeCell<String> {
+        
+        private TextField textField;
+        private ContextMenu addGroup = new ContextMenu();
+        
+        public TextFieldTreeCellImpl () {
+            
+            MenuItem addMenuItem = new MenuItem("Add Group");
+            addGroup.getItems().add(addMenuItem);
+            addMenuItem.setOnAction(t -> {
+                TreeItem newAccountGroup = new TreeItem<>("New Group");
+                getTreeItem().getChildren().add(newAccountGroup);
+            });
+            
+        }
+        
+        @Override
+        public void startEdit () {
+            
+            super.startEdit();
+            
+            if (textField == null) {
+                createTextField();
+            }
+            setText(null);
+            setGraphic(textField);
+            textField.selectAll();
+        }
+        
+        @Override
+        public void cancelEdit () {
+            
+            super.cancelEdit();
+            setText(getItem());
+            setGraphic(getTreeItem().getGraphic());
+        }
+        
+        @Override
+        public void updateItem (String item, boolean empty) {
+            
+            super.updateItem(item, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+                    }
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(getTreeItem().getGraphic());
+                    if (!getTreeItem().isLeaf() && getTreeItem()
+                                                           .getParent() !=
+                                                   null) {
+                        setContextMenu(addGroup);
+                    }
+                }
+            }
+        }
+        
+        private void createTextField () {
+            
+            textField = new TextField(getString());
+            textField.setOnKeyReleased(t -> {
+                if (t.getCode() == KeyCode.ENTER) {
+                    commitEdit(textField.getText());
+                } else if (t.getCode() == KeyCode.ESCAPE) {
+                    cancelEdit();
+                }
+            });
+        }
+        
+        private String getString () {
+            
+            return getItem() == null ? "" : getItem();
+        }
         
     }
     

@@ -30,8 +30,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * This class is for the application starting window, where the user login would
- * be checked and/or new db connection established.
+ * This class is for the application starting window, builds user interface
+ * and handles button actions.
  *
  * pwdman
  *
